@@ -56,8 +56,6 @@ rm -rf $RPM_BUILD_ROOT
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-gzip -9nf AUTHORS ChangeLog README TODO
-
 %find_lang %{name} --with-gnome --all-name
 
 %clean
@@ -65,5 +63,5 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc *.gz
+%doc AUTHORS ChangeLog README TODO
 %attr(755,root,root) %{_bindir}/*
