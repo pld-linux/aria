@@ -1,0 +1,3 @@
+- added regenerating configuration files
+- added patch: %%{name}-am_lt.patch to use libtool
+- spec ac-2.5 ready
