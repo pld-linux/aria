@@ -1,0 +1,617 @@
+--- aria-1.0.0/src/RetrieveHTTP.cc.orig	2002-12-18 16:41:05.000000000 +0100
++++ aria-1.0.0/src/RetrieveHTTP.cc	2004-03-28 15:40:23.743163936 +0200
+@@ -720,7 +720,7 @@
+       itemcell->set_Size_Total(0);
+       startingbyte = 0; // added
+     } else if(httpcon.ret_ContentLength() == startingbyte && startingbyte != 0) {
+-      //¤¹¤Ç¤Ë¥À¥¦¥ó¥í¡¼¥ÉºÑ
++      // --
+       // download has been competed
+       report = "'"+itemcell->ret_Filename()+"'"+_(" is already downloaded");
+       itemcell->Send_message_to_gui(report, MSG_DOWNLOAD_INFO);
+@@ -736,7 +736,7 @@
+       bool resume_allowed = true;
+       if(httpcon.ret_ContentLength() < startingbyte &&
+ 	 httpcon.ret_HTTP_Status() != PartialContent) {
+-	// ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬°Û¤Ê¤ë
++	// --
+ 	// size mismatch
+ 	itemcell->Send_message_to_gui(_("Size of local file is larger than remote file's one. Download again"), MSG_DOWNLOAD_ERROR);
+ 	startingbyte = 0;
+--- aria-1.0.0/src/RetrieveHTTP2.cc.orig	2002-04-07 00:13:06.000000000 +0200
++++ aria-1.0.0/src/RetrieveHTTP2.cc	2004-03-28 15:41:36.068168864 +0200
+@@ -112,7 +112,7 @@
+ 
+     if(startingbyte+itemcell->ret_Start_range() == itemcell->ret_End_range() &&
+        startingbyte != 0) {
+-      //¤¹¤Ç¤Ë¥À¥¦¥ó¥í¡¼¥ÉºÑ
++      // --
+       // downloading has been competed
+       report = "'"+itemcell->ret_Filename()+_("' is already downloaded");
+       itemcell->Send_message_to_gui(report, MSG_DOWNLOAD_INFO);
+@@ -124,13 +124,13 @@
+       throw ItemCell::ITEM_ESUCCESSALR;
+     } else if(startingbyte+itemcell->ret_Start_range() > itemcell->ret_End_range() &&
+ 	      httpcon.ret_HTTP_Status() != PartialContent) {
+-      // ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬°Û¤Ê¤ë
++      // --
+       // size mismatch
+       itemcell->Send_message_to_gui(_("Size of local file is larger than remote file's one. Download again"), MSG_DOWNLOAD_ERROR);
+       startingbyte = 0;
+       itemcell->set_Size_Total(itemcell->ret_End_range()-itemcell->ret_Start_range());
+     } else if(itemcell->ret_Start_range()+startingbyte > 0 && httpcon.ret_HTTP_Status() == OK) {
+-      // ¥ì¥¸¥å¡¼¥àÉÔ²Ä
++      // --
+       // www server does not support resume
+       itemcell->Send_message_to_gui(_("Sorry, cannot resume"), MSG_DOWNLOAD_INFO);
+       startingbyte = 0;
+--- aria-1.0.0/src/RetrieveFTP2.cc.orig	2002-04-07 00:13:06.000000000 +0200
++++ aria-1.0.0/src/RetrieveFTP2.cc	2004-03-28 15:42:11.683754472 +0200
+@@ -164,7 +164,7 @@
+     itemcell->set_Size_Total(itemcell->ret_End_range()-itemcell->ret_Start_range());
+     
+     if(itemcell->ret_Size_Total() == startingbyte) {
+-      //¤¹¤Ç¤Ë¥À¥¦¥ó¥í¡¼¥ÉºÑ
++      // --
+       // downloading has been competed
+       report = "'"+itemcell->ret_Filename()+"'"+_(" is already downloaded");
+       itemcell->Send_message_to_gui(report, MSG_DOWNLOAD_INFO);
+@@ -175,7 +175,7 @@
+       //Send_message_to_gui(_("connection closed"), MSG_DOWNLOAD_INFO);
+       throw ItemCell::ITEM_ESUCCESSALR;
+     } else if(itemcell->ret_Size_Total() < startingbyte) {
+-      // ¥Õ¥¡¥¤¥ë¥µ¥¤¥º¤¬°Û¤Ê¤ë
++      // --
+       // size mismatch
+       itemcell->Send_message_to_gui(_("Size of local file is larger than remote file's one. Download again"), MSG_DOWNLOAD_ERROR);
+       startingbyte = 0;
+--- aria-1.0.0/src/gui_file_open_and_save.cc.orig	2002-02-13 13:09:24.000000000 +0100
++++ aria-1.0.0/src/gui_file_open_and_save.cc	2004-03-28 15:49:54.412409024 +0200
+@@ -152,9 +152,9 @@
+ gboolean File_open_Saved_list(GtkWidget *w, gpointer data)
+ {
+   /*
+-  // ¸½ºß¤Î¥¢¥¤¥Æ¥à¥ê¥¹¥È¤òÊÝÂ¸¤â¤·¤¯¤ÏÇË´þ
++  // --
+   if(GTK_CLIST(itemlistwidget)->rows) {// if clist contains any items
+-    // ¸½ºß¤Î¥ê¥¹¥È¤òÊÝÂ¸¤¹¤ë¤«¤É¤¦¤«¿Ò¤Í¤ë
++    // --
+     AfterOpen = true;
+     Prompt_save_or_not();
+   } else {
+--- aria-1.0.0/src/AppOption.cc.orig	2002-01-20 15:41:58.000000000 +0100
++++ aria-1.0.0/src/AppOption.cc	2004-03-28 15:53:40.654015072 +0200
+@@ -280,7 +280,7 @@
+   gtk_box_pack_start(GTK_BOX(vbox), use_commandlist_toggle, FALSE, FALSE, 0);
+   gtk_widget_show(use_commandlist_toggle);
+ 
+-  // ¥³¥Þ¥ó¥É¥ê¥¹¥È¹¹¿·¥Ü¥¿¥ó
++  // --
+   GtkWidget *updateCommandListButton = gtk_button_new_with_label(_("Update Command list"));
+   gtk_widget_set_name(updateCommandListButton, "button");
+   gtk_widget_show(updateCommandListButton);
+@@ -289,7 +289,7 @@
+ 		     GTK_SIGNAL_FUNC(updateCommandListButton_clicked_cb),
+ 		     (GtkObject *)this);
+ 
+-  // ¥³¥Þ¥ó¥É¥ê¥¹¥È¤ÎCList
++  // --
+   GtkWidget *clist_label = gtk_label_new(_("Choose commands to use"));
+   gtk_widget_set_name(clist_label, "label");
+   gtk_box_pack_start(GTK_BOX(vbox), clist_label, FALSE, FALSE, 10);
+@@ -299,7 +299,7 @@
+   titles[0] = _("Command");
+   titles[1] = _("Comment");
+ 
+-  // ¥¹¥¯¥í¡¼¥ë¥¦¥¤¥ó¥É¥¦¤ËCList¤ò¥Ð¥Ã¥­¥ó¥°
++  // --
+   GtkWidget *scrolled_window = Create_CheckCList(&com_clist, titles, n_titles);
+   gtk_clist_set_column_auto_resize(GTK_CLIST(com_clist), 0, TRUE);
+   gtk_clist_set_column_auto_resize(GTK_CLIST(com_clist), 1, TRUE);
+@@ -588,7 +588,7 @@
+ 				     GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+       // set minimum size of scrolled window
+       gtk_widget_set_usize(scrolled_window, 210, 35);
+-      // CList ¤òºîÀ®¤¹¤ë¡£¤³¤ÎÎã¤Ç¤Ï n_titles Îó¤ò»È¤¦
++      // --
+       statusIconPreviewList = gtk_clist_new_with_titles(7, NULL);
+       gtk_clist_set_row_height(GTK_CLIST(statusIconPreviewList), 25);
+       gtk_clist_column_titles_passive(GTK_CLIST(statusIconPreviewList));
+@@ -598,7 +598,7 @@
+       }
+       // add shadow effect
+       gtk_clist_set_shadow_type(GTK_CLIST(statusIconPreviewList), GTK_SHADOW_ETCHED_OUT);
+-      // CList ¥¦¥£¥¸¥§¥Ã¥È¤ò¿âÄ¾¥Ü¥Ã¥¯¥¹¤Ë²Ã¤¨¡¢¤½¤ì¤òÉ½¼¨¤¹¤ë
++      // --
+       gtk_container_add(GTK_CONTAINER(scrolled_window), statusIconPreviewList);
+       gtk_widget_show(statusIconPreviewList);
+       // add 1 row
+@@ -936,7 +936,7 @@
+   gtk_box_pack_start(GTK_BOX(hbox), vbox, FALSE, FALSE, 5);
+   gtk_widget_show(vbox);
+ 
+-  // ¥¢¥¤¥Æ¥à¤òºï½ü¤¹¤ë¤È¤­¤Ë³ÎÇ§¤¹¤ë¤«¤É¤¦¤«
++  // --
+   confirm_clear_toggle = gtk_check_button_new_with_label(_("Confirm clear"));
+   gtk_widget_set_name(confirm_clear_toggle, "check_button");
+   gtk_box_pack_start(GTK_BOX(vbox), confirm_clear_toggle, FALSE, FALSE, 0);
+@@ -947,13 +947,13 @@
+   gtk_box_pack_start(GTK_BOX(vbox), confirm_delete_list_toggle, FALSE, FALSE, 0);
+   gtk_widget_show(confirm_delete_list_toggle);
+ 
+-  // ¥×¥í¥°¥é¥à½ªÎ»»þ¤Ë³ÎÇ§¤¹¤ë¤«¤É¤¦¤«
++  // --
+   confirm_exit_toggle = gtk_check_button_new_with_label(_("Confirm exit"));
+   gtk_widget_set_name(confirm_exit_toggle, "check_button");
+   gtk_box_pack_start(GTK_BOX(vbox), confirm_exit_toggle, FALSE, FALSE, 0);
+   gtk_widget_show(confirm_exit_toggle);
+ 
+-  // ¥í¥°¥¯¥ê¥¢»þ¤Ë³ÎÇ§¤¹¤ë¤«¤É¤¦¤«
++  // --
+   confirm_clearlog_toggle = gtk_check_button_new_with_label(_("Confirm clear system log"));
+   gtk_widget_set_name(confirm_clearlog_toggle, "check_button");
+   gtk_box_pack_start(GTK_BOX(vbox), confirm_clearlog_toggle, FALSE, FALSE, 0);
+--- aria-1.0.0/src/HistoryWindow.cc.orig	2002-10-01 17:32:00.000000000 +0200
++++ aria-1.0.0/src/HistoryWindow.cc	2004-03-28 16:04:29.637354608 +0200
+@@ -263,7 +263,7 @@
+ 			    GTK_SIGNAL_FUNC(History_close),
+ 			    (GtkObject *)this);
+ 
+-  // CList ¥¦¥£¥¸¥§¥Ã¥È¤ò¥Ñ¥Ã¥¯¤¹¤ë¥¹¥¯¥í¡¼¥ë¥É¥¦¥£¥ó¥É¥¦¤òºîÀ®¤¹¤ë
++  // --
+   GtkWidget *scrolled_window = gtk_scrolled_window_new (NULL, NULL);
+   
+   gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled_window),
+@@ -271,7 +271,7 @@
+   
+   gtk_widget_show(scrolled_window);  
+   
+-  // CList ¤òºîÀ®¤¹¤ë¡£¤³¤ÎÎã¤Ç¤Ï 2 Îó¤ò»È¤¦
++  // --
+   title[HistoryWindow::COL_FILE_H] = _("File");
+   title[HistoryWindow::COL_SIZE_H] = _("Total");
+   title[HistoryWindow::COL_DATE_H] = _("Date");
+@@ -293,7 +293,7 @@
+   gtk_signal_connect(GTK_OBJECT(historyList), "unselect-row",
+ 		     GTK_SIGNAL_FUNC(HistoryWindow_unselectRow_cb),
+ 		     (void *)this);
+-  // ¶­³¦¤Ë±Æ¤òÉÕ¤±¤ëÉ¬Í×¤Ê¤É¤Ê¤¤¤¬¡¢¤½¤¦¤¹¤ì¤Ð¸«±É¤¨¤¬ÎÉ¤¯¤Ê¤ë :)
++  // --
+   gtk_clist_set_shadow_type(GTK_CLIST(historyList), GTK_SHADOW_ETCHED_OUT);
+   gtk_clist_set_column_width(GTK_CLIST(historyList), COL_FILE_H, 300);
+   gtk_clist_set_column_width(GTK_CLIST(historyList), COL_SIZE_H, 100);
+@@ -312,7 +312,7 @@
+   //gtk_clist_set_column_justification(GTK_CLIST(historyList), HistoryWindow::COL_DATE_H, GTK_JUSTIFY_RIGHT);
+ 
+ 
+-  // CList ¥¦¥£¥¸¥§¥Ã¥È¤ò¿âÄ¾¥Ü¥Ã¥¯¥¹¤Ë²Ã¤¨¡¢¤½¤ì¤òÉ½¼¨¤¹¤ë
++  // --
+   gtk_container_add(GTK_CONTAINER(scrolled_window), historyList);
+   gtk_widget_show(historyList);
+   gtk_clist_column_titles_passive(GTK_CLIST(historyList));
+--- aria-1.0.0/po/cs.po.orig	2002-12-18 16:40:55.000000000 +0100
++++ aria-1.0.0/po/cs.po	2004-03-28 16:46:58.238908280 +0200
+@@ -4,13 +4,13 @@
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: PACKAGE VERSION\n"
++"Project-Id-Version: aria 1.0.0\n"
+ "POT-Creation-Date: 2002-12-16 22:05+0900\n"
+ "PO-Revision-Date: 2002-02-18 22:00+0100\n"
+ "Last-Translator: Adam Purkrt <adampurkrt@yahoo.com>\n"
+ "Language-Team: none\n"
+ "MIME-Version: 1.0\n"
+-"Content-Type: text/plain; charset=ISO 8859-2\n"
++"Content-Type: text/plain; charset=ISO-8859-2\n"
+ "Content-Transfer-Encoding: 8bit\n"
+ "X-Generator: KBabel 0.6\n"
+ 
+--- aria-1.0.0/po/de.po.orig	2002-12-18 16:40:56.000000000 +0100
++++ aria-1.0.0/po/de.po	2004-03-28 16:46:58.400883656 +0200
+@@ -4,7 +4,7 @@
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: PACKAGE VERSION\n"
++"Project-Id-Version: aria 1.0.0\n"
+ "POT-Creation-Date: 2002-12-16 22:05+0900\n"
+ "PO-Revision-Date: 2001-10-31 21:18GMT\n"
+ "Last-Translator: Hermann J. Beckers <beckers@st-oneline.de>\n"
+--- aria-1.0.0/po/es.po.orig	2002-12-18 16:40:56.000000000 +0100
++++ aria-1.0.0/po/es.po	2004-03-28 16:46:58.563858880 +0200
+@@ -1,6 +1,6 @@
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: PACKAGE VERSION\n"
++"Project-Id-Version: aria 1.0.0\n"
+ "POT-Creation-Date: 2002-12-16 22:05+0900\n"
+ "PO-Revision-Date: 2001-11-29 18:47GMT\n"
+ "Last-Translator: Alejandro Néstor Vargas <anv@xnetcuyo.com.ar>\n"
+--- aria-1.0.0/po/ru.po.orig	2002-12-18 16:40:57.000000000 +0100
++++ aria-1.0.0/po/ru.po	2004-03-28 16:46:59.350739256 +0200
+@@ -3,7 +3,7 @@
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: PACKAGE VERSION\n"
++"Project-Id-Version: aria 1.0.0\n"
+ "POT-Creation-Date: 2002-12-16 22:05+0900\n"
+ "PO-Revision-Date: 2001-11-01 22:42GMT\n"
+ "Last-Translator: Igor V. Youdytsky <Pitcher@newmail.ru>\n"
+--- aria-1.0.0/po/pl.po.orig	2002-12-18 16:40:57.000000000 +0100
++++ aria-1.0.0/po/pl.po	2004-03-28 16:58:02.398940608 +0200
+@@ -4,11 +4,11 @@
+ #
+ msgid ""
+ msgstr ""
+-"Project-Id-Version: 0.10.21\n"
++"Project-Id-Version: aria 1.0.0\n"
+ "POT-Creation-Date: 2002-12-16 22:05+0900\n"
+-"PO-Revision-Date: 2001-10-23 22:00+0200\n"
++"PO-Revision-Date: 2004-03-28 16:44+0200\n"
+ "Last-Translator: Przemys³aw Su³ek <pbs@linux.net.pl>\n"
+-"Language-Team: \n"
++"Language-Team: Polish\n"
+ "MIME-Version: 1.0\n"
+ "Content-Type: text/plain; charset=iso-8859-2\n"
+ "Content-Transfer-Encoding: 8bit\n"
+@@ -155,9 +155,8 @@
+ msgstr "Skompilowano dnia:"
+ 
+ #: src/main.cc:150
+-#, fuzzy
+ msgid "Copyright (C) 2000-2002 Tatsuhiro Tsujikawa"
+-msgstr "Wszystkie prawa zastrze¿one (c) 2000, 2001 Tatsuhiro Tsujikawa"
++msgstr "Wszystkie prawa zastrze¿one (C) 2000-2002 Tatsuhiro Tsujikawa"
+ 
+ #: src/main.cc:152 src/gui_help.cc:149
+ msgid ""
+@@ -191,13 +190,12 @@
+ "Gaily i Mark Adler"
+ 
+ #: src/main.cc:160 src/gui_help.cc:164
+-#, fuzzy
+ msgid ""
+ "This program uses OpenSSL, Copyright (C) 1995-1998 Eric Young (eay@cryptsoft."
+ "com)"
+ msgstr ""
+-"Ten program u¿ywa zlib, wszelkie prawa zastrze¿one (c) 1995-1998 Jean-loup "
+-"Gaily i Mark Adler"
++"Ten program u¿ywa OpenSSL, wszelkie prawa zastrze¿one (c) 1995-1998 Eric Young "
++"(eay@cryptsoft.com)"
+ 
+ #: src/main.cc:244
+ msgid "Status (Ready/Error/Downloading/Stop/Complete/Lock)"
+@@ -552,9 +550,8 @@
+ msgstr "Nieznany b³±d"
+ 
+ #: src/ItemCache.cc:97
+-#, fuzzy
+ msgid "Copied"
+-msgstr "Ciasteczko"
++msgstr "Skopiowano"
+ 
+ #: src/Retrieve.cc:111 src/RetrieveFTP.cc:255
+ msgid "Partial item added"
+@@ -856,11 +853,11 @@
+ 
+ #: src/gui_download.cc:1286
+ msgid "Start"
+-msgstr ""
++msgstr "Start"
+ 
+ #: src/gui_download.cc:1296
+ msgid "Stop"
+-msgstr ""
++msgstr "Stop"
+ 
+ #. Delete button
+ #: src/gui_download.cc:1306 src/HistoryWindow.cc:356
+@@ -1089,7 +1086,7 @@
+ #: src/gui_file_find_hyperlink.cc:116 src/ItemOption.cc:672
+ #: src/AppOption.cc:213 src/gui_help.cc:191
+ msgid "OK"
+-msgstr ""
++msgstr "OK"
+ 
+ #: src/gui_file_open_url.cc:53
+ msgid "Error occurred while reading URL file"
+@@ -1189,7 +1186,7 @@
+ #. Ok button
+ #: src/gui_list_new_list.cc:107 src/gui_list_rename_list.cc:110
+ msgid "Ok"
+-msgstr ""
++msgstr "Ok"
+ 
+ #. label
+ #: src/gui_list_new_list.cc:133 src/gui_list_rename_list.cc:136
+@@ -1284,7 +1281,7 @@
+ #: src/gui_list.cc:421 src/ItemOption.cc:719 src/ItemOption.cc:1629
+ #: src/PasteWindow.cc:800 src/HistoryWindow.cc:278
+ msgid "URL"
+-msgstr ""
++msgstr "URL"
+ 
+ #: src/gui_list.cc:426
+ msgid "Shuffle list"
+@@ -1473,12 +1470,12 @@
+ 
+ #: src/ItemOption.cc:779
+ msgid "Agent"
+-msgstr ""
++msgstr "Agent"
+ 
+ #: src/ItemOption.cc:785 src/ItemOption.cc:833 src/ItemOption.cc:1740
+ #: src/ItemOption.cc:2433
+ msgid "Proxy"
+-msgstr ""
++msgstr "Proxy"
+ 
+ #: src/ItemOption.cc:791
+ msgid "Recursive 1"
+@@ -1718,23 +1715,23 @@
+ 
+ #: src/ItemOption.cc:1988
+ msgid "Tags"
+-msgstr ""
++msgstr "Znaczniki"
+ 
+ #: src/ItemOption.cc:2000
+ msgid "href"
+-msgstr ""
++msgstr "href"
+ 
+ #: src/ItemOption.cc:2005
+ msgid "src"
+-msgstr ""
++msgstr "src"
+ 
+ #: src/ItemOption.cc:2010
+ msgid "background"
+-msgstr "t³o"
++msgstr "background"
+ 
+ #: src/ItemOption.cc:2015
+ msgid "codebase"
+-msgstr ""
++msgstr "codebase"
+ 
+ #. Parse Target extension clist
+ #. frame
+@@ -1799,7 +1796,7 @@
+ 
+ #: src/ItemOption.cc:2353
+ msgid "Use Accept-Language request header"
+-msgstr ""
++msgstr "U¿ywaj nag³ówka ¿±dania Accept-Language"
+ 
+ #: src/ItemOption.cc:2367
+ msgid "HTTP version "
+@@ -1812,7 +1809,7 @@
+ #. index.html
+ #: src/ItemOption.cc:2400
+ msgid "index.html"
+-msgstr ""
++msgstr "index.html"
+ 
+ #. User defined
+ #: src/ItemOption.cc:2410
+@@ -1841,7 +1838,7 @@
+ 
+ #: src/ItemOption.cc:2673
+ msgid "Don't send CWD command, instead use absolute path."
+-msgstr ""
++msgstr "Nie wysy³aj polecenia CWD, u¿yj bezwzglêdnej ¶cie¿ki."
+ 
+ #: src/ItemOption.cc:2729
+ msgid "Retrieve symbolic links as real files"
+@@ -1865,7 +1862,7 @@
+ 
+ #: src/AppOption.cc:33 src/AppOption.cc:34
+ msgid "<DEFAULT>"
+-msgstr ""
++msgstr "<DOMY¦LNE>"
+ 
+ #: src/AppOption.cc:149
+ msgid "Application Option"
+@@ -1962,9 +1959,8 @@
+ msgstr "nie mo¿na odczytaæ pliku piksmapy"
+ 
+ #: src/AppOption.cc:843
+-#, fuzzy
+ msgid "Bypass paste window"
+-msgstr "Dodaj do okna wklejania"
++msgstr "Pomiñ okienko wklejania"
+ 
+ #: src/AppOption.cc:849
+ msgid "Pixmap on DND Basket"
+@@ -1999,27 +1995,24 @@
+ msgstr "Potwierd¼ czysczenie logu systemu"
+ 
+ #: src/AppOption.cc:980
+-#, fuzzy
+ msgid "Use start timer"
+-msgstr "U¿ywaj licznika czasu"
++msgstr "U¿ywaj licznika czasu pocz±tku"
+ 
+ #: src/AppOption.cc:984
+ msgid "Start (hour : min) "
+ msgstr "Start (godz : min) "
+ 
+ #: src/AppOption.cc:1023
+-#, fuzzy
+ msgid "Use stop timer"
+-msgstr "U¿ywaj licznika czasu"
++msgstr "U¿ywaj licznika czasu koñca"
+ 
+ #: src/AppOption.cc:1027
+ msgid "Stop (hour : min) "
+ msgstr "Stop (godz : min) "
+ 
+ #: src/AppOption.cc:1066
+-#, fuzzy
+ msgid "Do not stop downloads when timer expires"
+-msgstr "Nie pobieraj ju¿ istniej±cych plików"
++msgstr "Nie przerywaj pobierania kiedy czas up³ynie"
+ 
+ #: src/AppOption.cc:1107
+ msgid "The number of simultaneous downloads for new list "
+@@ -2068,18 +2061,16 @@
+ msgstr "Maksymalna warto¶æ ograniczenia prêdko¶ci"
+ 
+ #: src/AppOption.cc:1253
+-#, fuzzy
+ msgid "Execute command when:"
+-msgstr "Wykonywanie wpisu polecenia '"
++msgstr "Wykonywanie polecenia kiedy:"
+ 
+ #: src/AppOption.cc:1262
+-#, fuzzy
+ msgid "all downloads are stopped or completed"
+-msgstr "Za³ozono, ¿e pobieranie zakoñczono."
++msgstr "wszystkie pobierania zostan± zatrzymane lub zakoñczone"
+ 
+ #: src/AppOption.cc:1271
+ msgid "timer expires"
+-msgstr ""
++msgstr "czas up³ynie"
+ 
+ #: src/AppOption.cc:1280
+ msgid "Command "
+@@ -2093,7 +2084,7 @@
+ 
+ #: src/ListEntry.cc:609
+ msgid "*"
+-msgstr ""
++msgstr "*"
+ 
+ #: src/ListEntry.cc:611
+ msgid "Downloaded"
+@@ -2105,7 +2096,7 @@
+ 
+ #: src/ListEntry.cc:613
+ msgid "%"
+-msgstr ""
++msgstr "%"
+ 
+ #: src/ListEntry.cc:614
+ msgid "Speed"
+@@ -2217,63 +2208,61 @@
+ 
+ #: src/gui_help.cc:91
+ msgid "Rollout: "
+-msgstr ""
++msgstr "Wydano: "
+ 
+ #. gtk_text_insert(GTK_TEXT(text), NULL, NULL, NULL, line.c_str(), -1);
+ #. show transraters
+ #. line.erase();
+ #: src/gui_help.cc:98
+ msgid "Translations:"
+-msgstr "T³umaczenia"
++msgstr "T³umaczenia:"
+ 
+ #: src/gui_help.cc:99
+ msgid "(Czech)"
+-msgstr "(Czeskie)"
++msgstr "(czeskie)"
+ 
+ #: src/gui_help.cc:100
+ msgid "(Spanish)"
+-msgstr "(Hiszpañskie)"
++msgstr "(hiszpañskie)"
+ 
+ #: src/gui_help.cc:101 src/gui_help.cc:102
+ msgid "(French)"
+-msgstr "(Francuskie)"
++msgstr "(francuskie)"
+ 
+ #: src/gui_help.cc:103
+ msgid "(German)"
+-msgstr "(Niemieckie)"
++msgstr "(niemieckie)"
+ 
+ #: src/gui_help.cc:104
+-#, fuzzy
+ msgid "(Hungarian)"
+-msgstr "(Rosyjskie)"
++msgstr "(wêgierskie)"
+ 
+ #: src/gui_help.cc:105
+-#, fuzzy
+ msgid "(Italian)"
+-msgstr "(Rosyjskie)"
++msgstr "(w³oskie)"
+ 
+ #: src/gui_help.cc:106
+ msgid "(Japanese)"
+-msgstr "(Japoñskie)"
++msgstr "(japoñskie)"
+ 
+ #: src/gui_help.cc:107
+ msgid "(Polish)"
+-msgstr "(Polskie)"
++msgstr "(polskie)"
+ 
+ #: src/gui_help.cc:108
+ msgid "(Russian)"
+-msgstr "(Rosyjskie)"
++msgstr "(rosyjskie)"
+ 
+ #: src/gui_help.cc:109
+ msgid "(Traditional Chinese)"
+-msgstr ""
++msgstr "(chiñskie tradycyjne)"
+ 
+ #. gtk_text_insert(GTK_TEXT(text), NULL, NULL, NULL, line.c_str(), -1);
+ #. show special thanks
+ #. line.erase();
+ #: src/gui_help.cc:117
+ msgid "Aria Logo:"
+-msgstr ""
++msgstr "Logo Aria:"
+ 
+ #: src/gui_help.cc:121
+ msgid "Special Thanks:"
+@@ -2306,6 +2295,19 @@
+ "this program; if not, write to the Free Software Foundation, Inc., 59 Temple "
+ "Place - Suite 330, Boston, MA 02111-1307, USA."
+ msgstr ""
++"Ten program jest darmowy; mo¿na go rozprowadzaæ i/lub modyfikowaæ "
++"przestrzegaj±c warunków Powszechnej Licencji Publicznej GNU (General Public "
++"Licence) opublikowanej przez Free Software Foundation, w wersji 2 lub, do "
++"wyboru, dowolnej po¼niejszej.\n"
++"\n"
++"Ten program ten jest rozprowadzany w nadziei, ¿e bêdzie przydatny, "
++"ale BEZ ¯ADNEJ GWARANCJI, nawet bez domy¶lnej gwarancji JAKO¦CI "
++"lub PRZYDATNO¦CI DO KONKRETNYCH ZASTOSOWAÑ. Szczegó³y znajduj± siê "
++"w Powszechnej Licencji Publicznej GNU.\n"
++"\n"
++"Kopia Powszechnej Licencji Publicznej GNU powinna byæ dostarczona wraz "
++"z tym programem. Je¶li nie, mo¿na napisaæ do Free Software Foundation, "
++"Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA."
+ 
+ #. gtk_text_insert(GTK_TEXT(text), NULL, NULL, NULL, line.c_str(), -1);
+ #. show compile information
+@@ -2365,20 +2367,3 @@
+ #: src/HistoryWindow.cc:600
+ msgid "Query"
+ msgstr "Zapytanie"
+-
+-#~ msgid "Execute command when all downloads are over or stopped by timer"
+-#~ msgstr ""
+-#~ "Wykonaj polecenie gdy pobieranie zatrzymane licznikiem czasu lub "
+-#~ "przekroczony czas"
+-
+-#~ msgid "Icons"
+-#~ msgstr "Ikony"
+-
+-#~ msgid "Code"
+-#~ msgstr "Kod"
+-
+-#~ msgid "error occurred while deleting files"
+-#~ msgstr "B³±d podczas usuwania plików"
+-
+-#~ msgid "Do not download a file if the file with the same name exists"
+-#~ msgstr "Nie pobieraj pliku, je¶li plik z tak± sam± nazw± ju¿ istnieje"
