@@ -5,7 +5,7 @@ Version:	0.9.1
 Release:	3
 License:	GPL
 Group:		X11/Applications/Networking
-Source0:	http://rabien.virtualave.net/linux/storage/sources/%{name}-%{version}.tar.bz2
+Source0:	http://aria.rednoah.com/storage/sources/%{name}-%{version}.tar.bz2
 # Source0-md5:	e3a42719d5d36e853c5bf0fc8f07dc9b
 Patch0:		%{name}-am_lt.patch
 URL:		http://aria.rednoah.com/
@@ -18,7 +18,6 @@ BuildRequires:	gtk+-devel >= 1.2.6
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
 
 %description
 Aria is a download tool similar to Reget or GetRight. It downloads
