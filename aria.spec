@@ -45,8 +45,8 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 gettextize --copy --force
 libtoolize --copy --force
 aclocal
-automake -a -c -f ||
-autoconf
+%{__automake} ||
+%{__autoconf}
 %configure
 %{__make}
 
