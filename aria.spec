@@ -8,6 +8,7 @@ Group:		X11/Applications/Networking
 Group(de):	X11/Applikationen/Netzwerkwesen
 Group(pl):	X11/Aplikacje/Sieciowe
 Source0:	http://rabien.virtualave.net/linux/storage/sources/%{name}-%{version}.tar.bz2
+Patch0:		%{name}-am_lt.patch
 URL:		http://aria.rednoah.com/
 BuildRequires:	glib-devel >= 1.2.6
 BuildRequires:	gtk+-devel >= 1.2.6
@@ -37,9 +38,14 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 
 %prep
 %setup -q
+%patch0 -p1
 
 %build
 gettextize --copy --force
+libtoolize --copy --force
+aclocal
+automake -a -c
+autoconf
 %configure
 %{__make}
 
