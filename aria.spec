@@ -42,7 +42,7 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 %patch0 -p1
 
 %build
-gettextize --copy --force
+%{__gettextize}
 %{__libtoolize}
 aclocal
 %{__automake} ||
