@@ -1,0 +1,11 @@
+diff -urN aria-0.9.1/configure.in aria-0.9.1.new/configure.in
+--- aria-0.9.1/configure.in	Thu Mar 22 09:42:12 2001
++++ aria-0.9.1.new/configure.in	Sat Aug 25 12:13:39 2001
+@@ -17,6 +17,7 @@
+ AC_ISC_POSIX
+ AC_PROG_INSTALL
+ AC_PROG_MAKE_SET
++AM_PROG_LIBTOOL
+ 
+ AM_MAINTAINER_MODE
+ 
