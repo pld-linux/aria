@@ -24,7 +24,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Aria is a download tool similar to Reget or GetRight. It downloads
 files from Internet via HTTP or FTP. The transfer can be paused,
-resumed, queued and saved. It has very friendy GTK based GUI, and
+resumed, queued and saved. It has very friendy GTK+ based GUI, and
 useful log consoles.Program supports CRC checking, HTTP proxy server,
 cut-and-paste, drag-and-drop, and can define specific file retrieving
 procedure for particular web servers.
@@ -33,7 +33,7 @@ procedure for particular web servers.
 Aria jest narzêdziem do pobierania plików podobnym do Reget lub
 GetRight. Aria pobiera pliki z Internetu poprzez HTTP lub FTP.
 Transfer mo¿e byæ wstrzymany, wznowiony, zakolejkowany i zapisany.
-Program ma przyjazny interfejs u¿ytkownika bazuj±cy na GTK oraz
+Program ma przyjazny interfejs u¿ytkownika bazuj±cy na GTK+ oraz
 u¿yteczne logi. Program wspiera sprawdzanie sum CRC, obs³ugê HTTP
 proxy, skopiuj-i-wklej, przeci±gnij-i-upu¶æ oraz umo¿liwia definiowane
 specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
