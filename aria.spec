@@ -5,8 +5,6 @@ Version:	0.9.1
 Release:	2
 License:	GPL
 Group:		X11/Applications/Networking
-Group(de):	X11/Applikationen/Netzwerkwesen
-Group(pl):	X11/Aplikacje/Sieciowe
 Source0:	http://rabien.virtualave.net/linux/storage/sources/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_lt.patch
 URL:		http://aria.rednoah.com/
