@@ -1,0 +1,85 @@
+--- aria-1.0.0/src/Makefile.am.orig	2002-09-30 15:29:45.000000000 +0200
++++ aria-1.0.0/src/Makefile.am	2004-03-28 16:25:34.032137384 +0200
+@@ -2,7 +2,7 @@
+ 
+ bin_PROGRAMS=aria
+ #aria_LDADD +=@GTK_LIBS@ @PTHREAD_LIBS@ @INTLLIBS@
+-CXXFLAGS=-O2 -Wall -DLOCALEDIR=\"$(localedir)\" -DDATADIR=\"$(datadir)\" -I$(top_builddir)/intl @GTK_CFLAGS@
++AM_CXXFLAGS=-Wall -DLOCALEDIR=\"$(localedir)\" -DDATADIR=\"$(datadir)\" -I$(top_builddir)/intl @GTK_CFLAGS@
+ #INCLUDES=@GTK_CFLAGS@
+ aria_SOURCES= main.cc initrc.cc download.cc gui_main.cc crc.cc\
+             md5.c md5.h\
+--- aria-1.0.0/configure.ac.orig	2004-03-28 16:30:08.000000000 +0200
++++ aria-1.0.0/configure.ac	2004-03-28 16:31:53.345472992 +0200
+@@ -13,8 +13,8 @@
+ VERSION="1.0.0"
+ DATE_ROLLOUT="16 Dec 2002"
+ AM_INIT_AUTOMAKE($PACKAGE, $VERSION)
+-AC_DEFINE_UNQUOTED(ARIA_VERSION, "Aria - version $VERSION")
+-AC_DEFINE_UNQUOTED(DATE_ROLLOUT, "$DATE_ROLLOUT")
++AC_DEFINE_UNQUOTED(ARIA_VERSION, "Aria - version $VERSION", [dummy])
++AC_DEFINE_UNQUOTED(DATE_ROLLOUT, "$DATE_ROLLOUT", [dummy])
+ 
+ # Set revision stamp
+ AC_REVISION($Id$)
+@@ -42,9 +42,9 @@
+ 
+ #Collect machine information
+ machine=`uname -smr`
+-AC_DEFINE_UNQUOTED(D_MACHINE_COMPILED, "$machine")
++AC_DEFINE_UNQUOTED(D_MACHINE_COMPILED, "$machine", [dummy])
+ date=`date`
+-AC_DEFINE_UNQUOTED(D_DATE_COMPILED, "$date")
++AC_DEFINE_UNQUOTED(D_DATE_COMPILED, "$date", [dummy])
+ 
+ #Check libstdc++
+ #Set test language to C++
+@@ -86,7 +86,7 @@
+ #AC_CHECK_LIB(z, main, Z_LIB="yes")
+ if test "x$have_zlib" = xyes; then
+   LIBS="$LIBS_save -lz"
+-  AC_DEFINE(HAVE_ZLIB)
++  AC_DEFINE(HAVE_ZLIB,,[dummy])
+ else
+   LIBS=$LIBS_save
+ fi
+@@ -99,7 +99,7 @@
+   AC_CHECK_LIB([crypto], [main], [have_openssl="yes"])
+   if test "x$have_openssl" = xyes; then
+     LIBS="$LIBS -lcrypto -lssl"
+-    AC_DEFINE(HAVE_OPENSSL)
++    AC_DEFINE(HAVE_OPENSSL,,[dummy])
+   fi
+ fi
+ 
+@@ -130,7 +130,7 @@
+ AC_MSG_RESULT($have_timezone)
+ CFLAGS=$CFLAGS_save
+ if test "x$have_timezone" = xyes; then
+-  AC_DEFINE(HAVE_TIMEZONE)
++  AC_DEFINE(HAVE_TIMEZONE,,[dummy])
+ fi
+ 
+ AC_STRUCT_TM()
+--- aria-1.0.0/acinclude.m4.orig	2004-03-28 16:30:00.000000000 +0200
++++ aria-1.0.0/acinclude.m4	2004-03-28 16:32:39.323483272 +0200
+@@ -11,7 +11,7 @@
+     ], gnupg_cv_typedef_$1=yes, gnupg_cv_typedef_$1=no )])
+     AC_MSG_RESULT($gnupg_cv_typedef_$1)
+     if test "$gnupg_cv_typedef_$1" = yes; then
+-        AC_DEFINE($2)
++        AC_DEFINE($2,,[dummy])
+     fi
+   ])
+ 
+@@ -55,8 +55,8 @@
+       ])
+     AC_MSG_RESULT([$gnupg_cv_c_endian])
+     if test "$gnupg_cv_c_endian" = little; then
+-      AC_DEFINE(LITTLE_ENDIAN_HOST)
++      AC_DEFINE(LITTLE_ENDIAN_HOST,,[dummy])
+     else
+-      AC_DEFINE(BIG_ENDIAN_HOST)
++      AC_DEFINE(BIG_ENDIAN_HOST,,[dummy])
+     fi
+   ])
