@@ -2,7 +2,7 @@ Summary:	Download tool similar to Reget or GetRight
 Summary(pl):	Narzêdzie do pobierania plików podobne do GetRighta
 Name:		aria
 Version:	0.9.1
-Release:	2
+Release:	3
 License:	GPL
 Group:		X11/Applications/Networking
 Source0:	http://rabien.virtualave.net/linux/storage/sources/%{name}-%{version}.tar.bz2
@@ -45,7 +45,7 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 gettextize --copy --force
 libtoolize --copy --force
 aclocal
-automake -a -c -f
+automake -a -c -f ||
 autoconf
 %configure
 %{__make}
