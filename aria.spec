@@ -9,6 +9,7 @@ Source0:	http://aria.rednoah.com/storage/sources/%{name}-%{version}.tar.bz2
 # Source0-md5:	e4e968fd10f3beb2402b851f5dad74ff
 Patch0:		%{name}-gettext.patch
 Patch1:		%{name}-opt.patch
+Patch2:		%{name}-gcc.patch
 URL:		http://aria.rednoah.com/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf >= 2.52
@@ -42,6 +43,7 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 %patch0 -p1
 tail -n +937 aclocal.m4 > acinclude.m4
 %patch1 -p1
+%patch2 -p1
 
 %build
 %{__gettextize}
