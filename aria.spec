@@ -2,7 +2,7 @@ Summary:	Download tool similar to Reget or GetRight
 Summary(pl):	Narzêdzie do pobierania plików podobne do GetRighta
 Name:		aria
 Version:	1.0.0
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Networking
 Source0:	http://aria.rednoah.com/storage/sources/%{name}-%{version}.tar.bz2
