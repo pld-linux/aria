@@ -2,7 +2,7 @@ Summary:	Download tool similar to Reget or GetRight
 Summary(pl):	Narzêdzie do pobierania plików podobne do GetRighta
 Name:		aria
 Version:	0.9.1
-Release:	1
+Release:	2
 License:	GPL
 Group:		X11/Applications/Networking
 Group(de):	X11/Applikationen/Netzwerkwesen
@@ -10,11 +10,14 @@ Group(pl):	X11/Aplikacje/Sieciowe
 Source0:	http://rabien.virtualave.net/linux/storage/sources/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_lt.patch
 URL:		http://aria.rednoah.com/
+BuildRequires:	XFree86-devel
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	gettext-devel
 BuildRequires:	glib-devel >= 1.2.6
 BuildRequires:	gtk+-devel >= 1.2.6
-BuildRequires:	XFree86-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	gettext-devel
+BuildRequires:	libtool
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		_prefix		/usr/X11R6
