@@ -43,7 +43,7 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 
 %build
 gettextize --copy --force
-libtoolize --copy --force
+%{__libtoolize}
 aclocal
 %{__automake} ||
 %{__autoconf}
