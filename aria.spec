@@ -42,10 +42,11 @@ specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
 %patch0 -p1
 
 %build
+rm -f missing
 %{__gettextize}
 %{__libtoolize}
-aclocal
-%{__automake} ||
+%{__aclocal}
+%{__automake}
 %{__autoconf}
 %configure
 %{__make}
