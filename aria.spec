@@ -1,5 +1,5 @@
 Summary:	Download tool similar to Reget or GetRight
-Summary(pl):	Narzêdzie do pobierania plików podobne do GetRighta
+Summary(pl.UTF-8):   NarzÄ™dzie do pobierania plikÃ³w podobne do GetRighta
 Name:		aria
 Version:	1.0.0
 Release:	2
@@ -29,14 +29,14 @@ useful log consoles.Program supports CRC checking, HTTP proxy server,
 cut-and-paste, drag-and-drop, and can define specific file retrieving
 procedure for particular web servers.
 
-%description -l pl
-Aria jest narzêdziem do pobierania plików podobnym do Reget lub
+%description -l pl.UTF-8
+Aria jest narzÄ™dziem do pobierania plikÃ³w podobnym do Reget lub
 GetRight. Aria pobiera pliki z Internetu poprzez HTTP lub FTP.
-Transfer mo¿e byæ wstrzymany, wznowiony, zakolejkowany i zapisany.
-Program ma przyjazny interfejs u¿ytkownika bazuj±cy na GTK+ oraz
-u¿yteczne logi. Program wspiera sprawdzanie sum CRC, obs³ugê HTTP
-proxy, skopiuj-i-wklej, przeci±gnij-i-upu¶æ oraz umo¿liwia definiowane
-specjalnych zachowañ przy pobieraniu plików z okre¶lonych serwerów.
+Transfer moÅ¼e byÄ‡ wstrzymany, wznowiony, zakolejkowany i zapisany.
+Program ma przyjazny interfejs uÅ¼ytkownika bazujÄ…cy na GTK+ oraz
+uÅ¼yteczne logi. Program wspiera sprawdzanie sum CRC, obsÅ‚ugÄ™ HTTP
+proxy, skopiuj-i-wklej, przeciÄ…gnij-i-upuÅ›Ä‡ oraz umoÅ¼liwia definiowane
+specjalnych zachowaÅ„ przy pobieraniu plikÃ³w z okreÅ›lonych serwerÃ³w.
 
 %prep
 %setup -q
