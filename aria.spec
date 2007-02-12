@@ -1,5 +1,5 @@
 Summary:	Download tool similar to Reget or GetRight
-Summary(pl.UTF-8):   Narzędzie do pobierania plików podobne do GetRighta
+Summary(pl.UTF-8):	Narzędzie do pobierania plików podobne do GetRighta
 Name:		aria
 Version:	1.0.0
 Release:	2
