@@ -14,7 +14,7 @@ URL:		http://aria.rednoah.com/
 BuildRequires:	XFree86-devel
 BuildRequires:	autoconf >= 2.52
 BuildRequires:	automake
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	glib-devel >= 1.2.6
 BuildRequires:	gtk+-devel >= 1.2.6
 BuildRequires:	libstdc++-devel
